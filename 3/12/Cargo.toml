@@ -1,9 +1,9 @@
 [package]
-name = "ticket"
+name = "outro_02"
 version = "0.1.0"
 edition = "2024"
 
 [dev-dependencies]
-common = { path = "../common"}
+common = { path = "../../common"}
 
 [dependencies]
