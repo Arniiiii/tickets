@@ -8,3 +8,95 @@
 //   It should be possible to print its debug representation.
 //
 // Tests are located in the `tests` folder—pay attention to the visibility of your types and methods.
+
+use std::ops::Add;
+
+
+#[derive(Debug,Clone, Copy)]
+pub struct SaturatingU16 {
+    val:u16
+}
+
+impl From<u16> for SaturatingU16 {
+    fn from(value: u16) -> Self {
+        Self {
+            val:value 
+        }
+    }
+}
+
+impl From<&u16> for SaturatingU16 {
+    fn from(value: &u16) -> Self {
+        Self {
+            val:*value 
+        }
+    }
+}
+
+impl From<u8> for SaturatingU16 {
+    fn from(value: u8) -> Self {
+        Self {
+            val:u16::from(value)
+        }
+    }
+}
+
+impl From<&u8> for SaturatingU16 {
+    fn from(value: &u8) -> Self {
+        Self {
+            val:u16::from(*value)
+        }
+    }
+}
+
+impl Add<Self> for SaturatingU16 {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self{
+            val:self.val.saturating_add(rhs.val)
+        }
+    }
+}
+
+impl Add<&Self> for SaturatingU16 {
+    type Output = Self;
+
+    fn add(self, rhs: &Self) -> Self::Output {
+        Self{
+            val:self.val.saturating_add((*rhs).val)
+        }
+    }
+}
+
+impl Add<u16> for SaturatingU16 {
+    type Output = Self;
+
+    fn add(self, rhs: u16) -> Self::Output {
+        Self{
+            val:self.val.saturating_add(rhs)
+        }
+    }
+}
+
+impl Add<&u16> for SaturatingU16 {
+    type Output = Self;
+
+    fn add(self, rhs: &u16) -> Self::Output {
+        Self{
+            val:self.val.saturating_add(*rhs)
+        }
+    }
+}
+
+impl PartialEq<Self> for SaturatingU16 {
+    fn eq(&self, other: &Self) -> bool {
+        self.val == other.val
+    }
+}
+
+impl PartialEq<u16> for SaturatingU16 {
+    fn eq(&self, other: &u16) -> bool {
+        self.val == *other
+    }
+}
