@@ -19,7 +19,7 @@ pub struct Order {
 }
 
 impl Order {
-    fn validate_product_name(product_name: &String) -> Result<bool, &'static str> {
+    fn validate_product_name(product_name: &String) -> Result<(), &'static str> {
         if product_name.is_empty() {
             return Err("The product name can't be empty");
         }
@@ -27,32 +27,32 @@ impl Order {
             return Err("The product name can't be longer than 300 bytes");
         }
 
-        Ok(true)
+        Ok(())
     }
 
-    fn validate_quantity(quantity: &u64) -> Result<bool, &'static str> {
+    fn validate_quantity(quantity: &u64) -> Result<(), &'static str> {
         if *quantity <= 0 {
             return Err("The quantity must be strictly greater than zero.");
         }
-        Ok(true)
+        Ok(())
     }
 
-    fn validate_unit_price(unit_price: &u64) -> Result<bool, &'static str> {
+    fn validate_unit_price(unit_price: &u64) -> Result<(), &'static str> {
         if *unit_price <= 0 {
             return Err("The unit price is in cents and must be strictly greater than zero.");
         }
-        Ok(true)
+        Ok(())
     }
 
     pub fn new(product_name: String, quantity: u64, unit_price: u64) -> Order {
         {
-            let res: bool = Self::validate_product_name(&product_name).unwrap_or_else(|error| {
+            Self::validate_product_name(&product_name).unwrap_or_else(|error| {
                 panic!("{error}");
             });
-            let res: bool = Self::validate_quantity(&quantity).unwrap_or_else(|error| {
+            Self::validate_quantity(&quantity).unwrap_or_else(|error| {
                 panic!("{error}");
             });
-            let res: bool = Self::validate_unit_price(&unit_price).unwrap_or_else(|error| {
+            Self::validate_unit_price(&unit_price).unwrap_or_else(|error| {
                 panic!("{error}");
             });
             Order {
@@ -76,19 +76,19 @@ impl Order {
         &self.unit_price
     }
     pub fn set_product_name(&mut self, product_name: String) {
-        let res: bool = Self::validate_product_name(&product_name).unwrap_or_else(|error| {
+        Self::validate_product_name(&product_name).unwrap_or_else(|error| {
             panic!("{error}");
         });
         self.product_name = product_name
     }
     pub fn set_quantity(&mut self, quantity: u64) {
-        let res: bool = Self::validate_quantity(&quantity).unwrap_or_else(|error| {
+        Self::validate_quantity(&quantity).unwrap_or_else(|error| {
             panic!("{error}");
         });
         self.quantity = quantity
     }
     pub fn set_unit_price(&mut self, unit_price: u64) {
-        let res: bool = Self::validate_unit_price(&unit_price).unwrap_or_else(|error| {
+        Self::validate_unit_price(&unit_price).unwrap_or_else(|error| {
             panic!("{error}");
         });
         self.unit_price = unit_price
