@@ -75,22 +75,25 @@ impl Order {
     pub fn unit_price(&self) -> &u64 {
         &self.unit_price
     }
-    pub fn set_product_name(&mut self, product_name: String) {
+    pub fn set_product_name(&mut self, product_name: String) -> &mut Self {
         Self::validate_product_name(&product_name).unwrap_or_else(|error| {
             panic!("{error}");
         });
-        self.product_name = product_name
+        self.product_name = product_name;
+        self
     }
-    pub fn set_quantity(&mut self, quantity: u64) {
+    pub fn set_quantity(&mut self, quantity: u64) -> &mut Self {
         Self::validate_quantity(&quantity).unwrap_or_else(|error| {
             panic!("{error}");
         });
-        self.quantity = quantity
+        self.quantity = quantity;
+        self
     }
-    pub fn set_unit_price(&mut self, unit_price: u64) {
+    pub fn set_unit_price(&mut self, unit_price: u64) -> &mut Self {
         Self::validate_unit_price(&unit_price).unwrap_or_else(|error| {
             panic!("{error}");
         });
-        self.unit_price = unit_price
+        self.unit_price = unit_price;
+        self
     }
 }
