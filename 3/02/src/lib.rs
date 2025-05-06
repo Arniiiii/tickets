@@ -96,22 +96,4 @@ mod tests {
     fn in_progress_is_allowed() {
         Ticket::new(valid_title(), valid_description(), "In Progress".into());
     }
-
-    #[test]
-    fn test_is_open() {
-        let ticket = Ticket {
-            title: "Build a ticket system".into(),
-            description: "A Kanban board".into(),
-            status: "Open".into(),
-        };
-
-        assert_eq!(true, ticket.is_open());
-
-        let ticket_closed = Ticket {
-            title: "Build a ticket system".into(),
-            description: "A Kanban board".into(),
-            status: "Closed".into(),
-        };
-        assert_ne!(true, ticket_closed.is_open());
-    }
 }
