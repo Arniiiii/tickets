@@ -10,11 +10,7 @@ pub struct Configuration {
 }
 
 impl Ticket {
-    fn validate(
-        title: &String,
-        description: &String,
-        status: &String,
-    ) -> Result<bool, &'static str> {
+    fn validate(title: &String, description: &String, status: &String) -> Result<(), &'static str> {
         if title.len() == 0 {
             return Err("Title cannot be empty");
         }
@@ -31,15 +27,16 @@ impl Ticket {
             return Err("Description cannot be longer than 500 bytes");
         }
 
-        if ! (status == "To-Do" || status == "In Progress" || status == "Done") {
+        let valid_statuses = ["To-Do", "In Progress","Done"];
+        if ! valid_statuses.contains(&status.as_str()) {
             return Err("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
         }
 
-        Ok(true)
+        Ok(())
     }
 
     pub fn new(title: String, description: String, status: String) -> Ticket {
-        let res: bool = Ticket::validate(&title, &description, &status).unwrap_or_else(|error| {
+        Ticket::validate(&title, &description, &status).unwrap_or_else(|error| {
             panic!("{error}");
         });
 
