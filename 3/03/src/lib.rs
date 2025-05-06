@@ -21,7 +21,7 @@ impl Ticket {
         title: &String,
         description: &String,
         status: &String,
-    ) -> Result<bool, &'static str> {
+    ) -> Result<(), &'static str> {
         if title.len() == 0 {
             return Err("Title cannot be empty");
         }
@@ -42,12 +42,12 @@ impl Ticket {
             return Err("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
         }
 
-        Ok(true)
+        Ok(())
     }
 
 
     pub fn new(title: String, description: String, status: String) -> Ticket {
-        let res: bool = Ticket::validate(&title, &description, &status).unwrap_or_else(|error| {
+        Ticket::validate(&title, &description, &status).unwrap_or_else(|error| {
             panic!("{error}");
         });
 
